@@ -2,9 +2,6 @@ from transformers import AutoTokenizer
 import argparse
 import torch
 
-# required arguments
-# note: these aren't made positional to make input files as intuitive as possible
-# error handling in get_args wil raise exceptions for missing/incorrect values
 parser = argparse.ArgumentParser(description='Capture training parameters')
 parser.add_argument('-e', '--epochs', type=int, default=2, help='number of training cycles') #, required=True)
 parser.add_argument('-b', '--batch_size', type=int, default=32, help='batch size')
@@ -32,9 +29,7 @@ parser.add_argument('-st', '--save_state_dict', type=bool, help='Save state_dict
 # optional arguments that likely won't need modification
 parser.add_argument('-max', '--max_sequence_length', type=int, default=128, help='max tokens per sample, up to 512')
 
-
 args = parser.parse_args()
-
 
 MAX_LEN = args.max_sequence_length
 TRAIN_BATCH_SIZE = args.batch_size
@@ -65,15 +60,6 @@ TOKENIZER = AutoTokenizer.from_pretrained(
     do_lower_case=True,
     use_fast=True)
 
-
 # LABEL_COLUMNS = ['negation', 'doctime', 'illicitDrugUse', 'subject' , 'severity', 'uncertainty']
-# LABEL_COLUMNS = ['negation', 'doctime', 'illicitDrugUse', 'subject' , 'uncertainty']
-# LABEL_COLUMNS = ['negation', 'doctime', 'illicitDrugUse', 'subject'] # ,'uncertainty'
-# LABEL_COLUMNS = ['negation', 'doctime', 'subject'] # ,'uncertainty'
-
-# LABEL_COLUMNS = ['negation','severity','subject','uncertainty','course','conditional', 'genetic']
-# LABEL_COLUMNS = ['negation', 'severity', 'subject', 'uncertainty', 
-#                  'course', 'conditional', 'genetic', 
-#                  'doctime', 'illicitDrugUse']
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")

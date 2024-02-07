@@ -31,19 +31,9 @@ logger.addHandler(file_handler)
 
 
 if __name__ == '__main__':
-    # train_df = joblib.load('/data/user/lateef11/bioNLP/semeval/semeval_data/fromGuergana/tokenized_sentences/no_context/train_df.bin')
-    # eval_df = joblib.load('/data/user/lateef11/bioNLP/semeval/semeval_data/fromGuergana/tokenized_sentences/no_context/eval_df.bin')
 
-#     train_df = joblib.load('/data/user/lateef11/bioNLP/semeval/semeval_data/fromGuergana/train_df.bin')
-#     eval_df = joblib.load('/data/user/lateef11/bioNLP/semeval/semeval_data/fromGuergana/eval_df.bin')    
-#     train_df = joblib.load(f'{config.INPUT_DIR}train_df.bin')
-#     eval_df = joblib.load(f'{config.INPUT_DIR}eval_df.bin')    
-
-
-#     train_df = pd.read_csv(output_dir + "train_df.csv", sep=_sep, names=columns, quoting=csv.QUOTE_NONE, encoding='utf-8')
     train_df = pd.read_csv(f'{config.INPUT_DIR}train_encoded_df.csv', sep='|', encoding='utf-8')
     eval_df = pd.read_csv(f'{config.INPUT_DIR}devel_encoded_df.csv', sep='|', encoding='utf-8')
-    # test_df = pd.read_csv('semeval_data/fromGuergana/test_df.csv', sep='\t', encoding='utf-8')
     
     # train_df = train_df.sample(500)
     # eval_df = eval_df.sample(500)

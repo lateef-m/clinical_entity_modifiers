@@ -1,6 +1,4 @@
 import config
-# import config_withArgs as config
-
 import joblib
 import os
 import re
@@ -9,9 +7,7 @@ from sklearn import preprocessing, model_selection
 import argparse
 import csv
 
-
 from pathlib import Path
-# models_dir = f'{config.}/models/'
 Path(config.OUTPUT_DIR).mkdir(parents=True, exist_ok=True)
 
 
@@ -28,7 +24,6 @@ def SemEval_pipe_to_custom_pipe(input_dir, output_dir, _sep):
     """
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-    # for n in ['ecg', 'radiology', 'echo']:
     print(os.listdir(input_dir))
     print()
     for n in os.listdir(input_dir):
@@ -99,9 +94,6 @@ def process_data_from_custom_pipe_folder(input_dir, output_dir, _type, _sep):
     fileslist = os.listdir(input_dir) 
     fileslist_fullpath = [input_dir + file for file in fileslist if '_custom.pipe' in file]
     
-    # print(fileslist)
-    # print(fileslist_fullpath)
-
     #read each file into pandas
     # df_list = [pd.read_table(file, sep=_sep, names=columns, encoding='utf-8') for file in fileslist_fullpath]
     df_list = [pd.read_csv(file, sep=_sep, names=columns, quoting=csv.QUOTE_NONE, encoding='utf-8') for file in fileslist_fullpath]
@@ -153,7 +145,7 @@ if __name__ == '__main__':
     output_dir = config.OUTPUT_DIR
     _sep = config.SEP
     
-    SemEval_pipe_to_custom_pipe(input_dir + "train2/", output_dir + "train/", _sep)
+    SemEval_pipe_to_custom_pipe(input_dir + "train/", output_dir + "train/", _sep)
     SemEval_pipe_to_custom_pipe(input_dir + "devel/", output_dir + "devel/", _sep)
     SemEval_pipe_to_custom_pipe(input_dir + "test/", output_dir + "test/", _sep)
     

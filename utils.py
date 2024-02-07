@@ -94,10 +94,8 @@ def train_fn(data_loader, model, optimizer, device, scheduler, n_examples):
                              token_type_ids=token_type_ids,
                              attention_mask=attention_mask
                              )
-#         print(locals())
         # negation_output = model_output['negation_output']
 
-        # loss, losses_train = model.get_loss(model_output, batch['labels'])
         loss, losses_train = get_loss(model_output, batch['labels'])
 
         for i in config.LABEL_COLUMNS:
@@ -109,8 +107,6 @@ def train_fn(data_loader, model, optimizer, device, scheduler, n_examples):
         for i in config.LABEL_COLUMNS:
             locals()[f'{i}_correct_pred'] += torch.sum(locals()[f'{i}_pred'] == batch['labels'][f'target_{i}'].to(device))
         # neg_correct_pred += torch.sum(neg_preds == batch['target_negation'])
-
-        #         mcc = metrics.matthews_corrcoef(y_true, y_pred)
 
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
@@ -147,9 +143,7 @@ def eval_fn(data_loader, model, device, n_examples):
                              token_type_ids=token_type_ids,
                              attention_mask=attention_mask
                              )
-#         print(model_output)
         
-        # loss, losses_eval = model.get_loss(model_output, batch['labels'])
         loss, losses_eval = get_loss(model_output, batch['labels'])
 
         for i in config.LABEL_COLUMNS:
@@ -163,10 +157,6 @@ def eval_fn(data_loader, model, device, n_examples):
 
         final_loss += loss.item()
 
-    # accuracies = np.zeros(len(config.LABEL_COLUMNS))
-    # for j, i in zip(np.arange(len(config.LABEL_COLUMNS)), config.LABEL_COLUMNS):
-    #     accuracies[j] = locals()[f'{i}_correct_pred'] / float(n_examples)
-    #
     # return accuracies[0], accuracies[1], accuracies[2], accuracies[3], accuracies[4], accuracies[5], accuracies[6], final_loss / len(data_loader)
     accuracies_dict = {}
     for i in config.LABEL_COLUMNS:
